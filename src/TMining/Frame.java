@@ -569,15 +569,6 @@ public class Frame extends javax.swing.JFrame {
             stat("Error : no Lemma data");
             return;
         }
-        JFileChooser fc = null;
-        if (cbToFile.isSelected()) {
-            fc = new JFileChooser(new File("/home/me/Documents"));
-            fc.showSaveDialog(null);
-            if (fc.getSelectedFile() == null) {
-                stat("Cancel");
-                return;
-            }
-        }
         Dokumens docs = new Dokumens();
         for (int i = 0; i < dm.getRowCount(); i++) {
             try {
@@ -633,6 +624,15 @@ public class Frame extends javax.swing.JFrame {
                 }
             }
         });
+        JFileChooser fc = null;
+        if (cbToFile.isSelected()) {
+            fc = new JFileChooser(new File("/home/me/Documents"));
+            fc.showSaveDialog(null);
+            if (fc.getSelectedFile() == null) {
+                stat("Cancel");
+                return;
+            }
+        }
         exe.shutdown();
         try {
             exe.awaitTermination(Long.MAX_VALUE / 2, TimeUnit.NANOSECONDS);
