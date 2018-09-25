@@ -18,7 +18,6 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javafx.stage.FileChooser;
 import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileSystemView;
 import javax.swing.table.DefaultTableModel;
@@ -33,8 +32,14 @@ public class Frame extends javax.swing.JFrame {
     public Frame() {
         try {
             initComponents();
-            stop_word.add(load_arr("stopword-en.txt"));
-            lemma_dict.add(load_dictionary("lemmatization-en.txt", "\t"));
+            addStopWord("stopwords/stopword-en.txt");
+            for (int i = 1; i <= 4; i++) {
+                addLemma("lemma/lemma-en" + i + ".txt");
+            }
+            //  stop_word.add(load_arr("stopword-en.txt"));
+            //lemma_dict.add(load_dictionary("lemmatization-en.txt", "\t"));
+            tbdPanel.setSelectedIndex(1);
+            stat("Ready");
         } catch (FileNotFoundException ex) {
             Logger.getLogger(Frame.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -50,6 +55,7 @@ public class Frame extends javax.swing.JFrame {
 
         jDialog1 = new javax.swing.JDialog();
         jFileChooser1 = new javax.swing.JFileChooser();
+        jPanel7 = new javax.swing.JPanel();
         tbdPanel = new javax.swing.JTabbedPane();
         jPanel1 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -67,12 +73,27 @@ public class Frame extends javax.swing.JFrame {
         cbIDF = new javax.swing.JCheckBox();
         cbTFIDF = new javax.swing.JCheckBox();
         cbToFile = new javax.swing.JCheckBox();
-        jPanel2 = new javax.swing.JPanel();
-        jPanel4 = new javax.swing.JPanel();
-        jPanel5 = new javax.swing.JPanel();
         jPanel3 = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         txtOutput = new javax.swing.JTextArea();
+        jPanel2 = new javax.swing.JPanel();
+        jPanel4 = new javax.swing.JPanel();
+        jLabel2 = new javax.swing.JLabel();
+        jScrollPane4 = new javax.swing.JScrollPane();
+        tblStopWord = new javax.swing.JTable();
+        jToolBar2 = new javax.swing.JToolBar();
+        btnStopWordAdd = new javax.swing.JButton();
+        btnStopWordRemove = new javax.swing.JButton();
+        btnStopWordReset = new javax.swing.JButton();
+        jPanel5 = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        tblLemma = new javax.swing.JTable();
+        jToolBar3 = new javax.swing.JToolBar();
+        btnLemmaAdd = new javax.swing.JButton();
+        btnLemmaRemove = new javax.swing.JButton();
+        btnLemmaReset = new javax.swing.JButton();
+        lblStatus = new javax.swing.JLabel();
 
         javax.swing.GroupLayout jDialog1Layout = new javax.swing.GroupLayout(jDialog1.getContentPane());
         jDialog1.getContentPane().setLayout(jDialog1Layout);
@@ -87,9 +108,11 @@ public class Frame extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Texty");
-        setPreferredSize(new java.awt.Dimension(800, 600));
+        setPreferredSize(new java.awt.Dimension(900, 700));
+        setResizable(false);
 
         tbdPanel.setFocusable(false);
+        tbdPanel.setPreferredSize(new java.awt.Dimension(600, 400));
 
         tblFile.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -245,53 +268,9 @@ public class Frame extends javax.swing.JFrame {
 
         tbdPanel.addTab("File Manager", jPanel1);
 
-        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
-        jPanel4.setLayout(jPanel4Layout);
-        jPanel4Layout.setHorizontalGroup(
-            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 361, Short.MAX_VALUE)
-        );
-        jPanel4Layout.setVerticalGroup(
-            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
-        );
-
-        javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
-        jPanel5.setLayout(jPanel5Layout);
-        jPanel5Layout.setHorizontalGroup(
-            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 411, Short.MAX_VALUE)
-        );
-        jPanel5Layout.setVerticalGroup(
-            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 494, Short.MAX_VALUE)
-        );
-
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
-        );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap())
-        );
-
-        tbdPanel.addTab("SL Manager", jPanel2);
-
         txtOutput.setColumns(20);
         txtOutput.setRows(5);
+        txtOutput.setText("<---------IMPORTANT------------>\n\"This program ain't pretty, but you do \"v\" \" ~ INSANEPROGRAMMER\n\n\n1. The input must be .txt file or raw text file, this might change\n2. You can add more lemma database in SL manager with configuration <\"word\" -> \"root\"> e.g. darkest\tdark\n3. You can add more stopwords database in SL manager\n4. Full of bugs and riddled with riddle ;\\\n5. Use \"Save to File\" often. its faster. I dont know why appending String to TextBox is such pain in the a**\n\n\n<---------HOW TO------------>\n1. Open SL manager. Manage your stopwords and lemma databases. You can add, delete, or delete all.\n2. Open File Manager. Manage your text file to be pre-processed.\n3. IMPORTANT!!! Only use raw... this might change in the future if i have time.\n4. Choose your formatting.. its on right-down side.\n5. Choose to \"Save to file\" or just print to Output (Save to file recommended).\n6. Pre-process\n\n(?) COPYLEFT ALL WRONGS RESERVED!!!\n\nGUEDHO AUGNIFICO MAHARDIKA\n165150200111137\nFILKOM\nUB\n");
         jScrollPane2.setViewportView(txtOutput);
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
@@ -305,7 +284,207 @@ public class Frame extends javax.swing.JFrame {
             .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 516, Short.MAX_VALUE)
         );
 
-        tbdPanel.addTab("tab3", jPanel3);
+        tbdPanel.addTab("Output", jPanel3);
+
+        jLabel2.setText("Stopword");
+
+        tblStopWord.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "File"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.String.class
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+        });
+        jScrollPane4.setViewportView(tblStopWord);
+
+        jToolBar2.setRollover(true);
+
+        btnStopWordAdd.setText("Tambah");
+        btnStopWordAdd.setFocusable(false);
+        btnStopWordAdd.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btnStopWordAdd.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        btnStopWordAdd.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnStopWordAddActionPerformed(evt);
+            }
+        });
+        jToolBar2.add(btnStopWordAdd);
+
+        btnStopWordRemove.setText("Kurang");
+        btnStopWordRemove.setFocusable(false);
+        btnStopWordRemove.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btnStopWordRemove.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        btnStopWordRemove.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnStopWordRemoveActionPerformed(evt);
+            }
+        });
+        jToolBar2.add(btnStopWordRemove);
+
+        btnStopWordReset.setText("Reset");
+        btnStopWordReset.setFocusable(false);
+        btnStopWordReset.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btnStopWordReset.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        btnStopWordReset.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnStopWordResetActionPerformed(evt);
+            }
+        });
+        jToolBar2.add(btnStopWordReset);
+
+        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
+        jPanel4.setLayout(jPanel4Layout);
+        jPanel4Layout.setHorizontalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jToolBar2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 340, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addContainerGap())
+        );
+        jPanel4Layout.setVerticalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 216, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jToolBar2, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(72, 72, 72))
+        );
+
+        jLabel1.setText("Lemma");
+
+        tblLemma.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "File"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.String.class
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+        });
+        jScrollPane3.setViewportView(tblLemma);
+
+        jToolBar3.setRollover(true);
+
+        btnLemmaAdd.setText("Tambah");
+        btnLemmaAdd.setFocusable(false);
+        btnLemmaAdd.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btnLemmaAdd.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        btnLemmaAdd.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLemmaAddActionPerformed(evt);
+            }
+        });
+        jToolBar3.add(btnLemmaAdd);
+
+        btnLemmaRemove.setText("Kurang");
+        btnLemmaRemove.setFocusable(false);
+        btnLemmaRemove.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btnLemmaRemove.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        btnLemmaRemove.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLemmaRemoveActionPerformed(evt);
+            }
+        });
+        jToolBar3.add(btnLemmaRemove);
+
+        btnLemmaReset.setText("Reset");
+        btnLemmaReset.setFocusable(false);
+        btnLemmaReset.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btnLemmaReset.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        btnLemmaReset.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLemmaResetActionPerformed(evt);
+            }
+        });
+        jToolBar3.add(btnLemmaReset);
+
+        javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
+        jPanel5.setLayout(jPanel5Layout);
+        jPanel5Layout.setHorizontalGroup(
+            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel5Layout.createSequentialGroup()
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
+            .addGroup(jPanel5Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 384, Short.MAX_VALUE)
+                    .addComponent(jToolBar3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
+        );
+        jPanel5Layout.setVerticalGroup(
+            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel5Layout.createSequentialGroup()
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(26, 26, 26)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 216, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jToolBar3, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 73, Short.MAX_VALUE))
+        );
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(117, 117, 117))
+        );
+
+        tbdPanel.addTab("SL Manager", jPanel2);
+
+        javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
+        jPanel7.setLayout(jPanel7Layout);
+        jPanel7Layout.setHorizontalGroup(
+            jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(tbdPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 807, Short.MAX_VALUE)
+        );
+        jPanel7Layout.setVerticalGroup(
+            jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel7Layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(tbdPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 544, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
+
+        lblStatus.setText("start");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -313,13 +492,19 @@ public class Frame extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(tbdPanel))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(lblStatus, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(50, Short.MAX_VALUE)
-                .addComponent(tbdPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 544, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap()
+                .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(lblStatus, javax.swing.GroupLayout.DEFAULT_SIZE, 46, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -334,17 +519,17 @@ public class Frame extends javax.swing.JFrame {
         File[] files = fc.getSelectedFiles();
         File fd = fc.getSelectedFile();
         if (files.length > 0) {
-            System.err.println("File loaded");
+            stat("File loaded");
             DefaultTableModel model = (DefaultTableModel) tblFile.getModel();
             for (File f : files) {
                 model.addRow(new String[]{f.getName(), f.getAbsolutePath()});
             }
         } else if (fd != null) {
-            System.err.println("File loaded");
+            stat("File loaded");
             DefaultTableModel model = (DefaultTableModel) tblFile.getModel();
             model.addRow(new String[]{fd.getName(), fd.getAbsolutePath()});
         } else {
-            System.err.println("Failed to load file");
+            stat("Error : Failed to load file");
         }
     }//GEN-LAST:event_btnTambahActionPerformed
 
@@ -369,114 +554,268 @@ public class Frame extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
+        stat("Starting....");
         DefaultTableModel dm = (DefaultTableModel) tblFile.getModel();
         int rowCount = dm.getRowCount();
-        if (rowCount > 0) {
-            Dokumens docs = new Dokumens();
-            for (int i = 0; i < dm.getRowCount(); i++) {
-                try {
-                    docs.addDoc(new Dokumen((String) dm.getValueAt(i, 0), new FileReader((String) dm.getValueAt(i, 1))));
-                } catch (FileNotFoundException ex) {
-                    System.err.println("Failed to load file....");
-                }
-            }
-            ExecutorService exe = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors());
-            exe.execute(new Runnable() {
-                @Override
-                public void run() {
-                    if (cbDocInfo.isSelected()) {
-                        System.err.println("Formatting Doc");
-                        DocFOrmatted = docs.getAllDocFormatted() + "\n";
-                    } else {
-                        DocFOrmatted = "";
-                    }
-                    if (cbTF.isSelected()) {
-                        System.err.println("Look TF");
-                        TF = docs.get_TF_formatted() + "\n";
-                    } else {
-                        TF = "";
-                    }
-                    if (cbLTF.isSelected()) {
-                        System.err.println("Look LTF");
-                        LTF = docs.get_LTF_formatted() + "\n";
-                    } else {
-                        LTF = "";
-                    }
-                }
-            });
-            exe.execute(new Runnable() {
-                @Override
-                public void run() {
-                    if (cbDF.isSelected()) {
-                        System.err.println("Look DF");
-                        DF = docs.get_DF() + "\n";
-                    } else {
-                        DF = "";
-                    }
-                    if (cbIDF.isSelected()) {
-                        System.err.println("Look IDF");
-                        IDF = docs.get_IDF() + "\n";
-                    } else {
-                        IDF = "";
-                    }
-                    if (cbTFIDF.isSelected()) {
-                        System.err.println("Look TFIDF");
-                        TFIDF = docs.get_TFIDF_formatted() + "\n";
-                    } else {
-                        TFIDF = "";
-                    }
-                }
-            });
-            JFileChooser fc = null;
-            if (cbToFile.isSelected()) {
-                fc = new JFileChooser(new File("/home/me/Documents"));
-                fc.showSaveDialog(null);
-            }
-            exe.shutdown();
-            try {
-                exe.awaitTermination(Long.MAX_VALUE / 2, TimeUnit.NANOSECONDS);
-            } catch (InterruptedException ex) {
-                Logger.getLogger(Frame.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            if (!cbToFile.isSelected()) {
-                System.out.println("Set DOC");
-                txtOutput.setText(DocFOrmatted);
-                System.out.println("set TF");
-                txtOutput.append(TF);
-                System.out.println("Set LTF");
-                txtOutput.append(LTF);
-                System.out.println("Set DF");
-                txtOutput.append(DF);
-                System.out.println("Set IDF");
-                txtOutput.append(IDF);
-                System.out.println("Set TFIDF");
-                txtOutput.append(TFIDF);
-                tbdPanel.setSelectedIndex(2);
-            } else if(fc.getSelectedFile() != null){
-                try {
-                    String file_name = fc.getSelectedFile().getName();
-                    File file;
-                    if (!file_name.contains(".txt")) {
-                        file = new File(fc.getSelectedFile().getAbsolutePath() + ".txt");
-                    } else {
-                        file = new File(fc.getSelectedFile().getAbsolutePath());
-                    }
-                    FileWriter fw = new FileWriter(file);
-                    StringBuilder sb = new StringBuilder();
-                    sb.append(DocFOrmatted);
-                    sb.append(TF);
-                    sb.append(LTF);
-                    sb.append(DF);
-                    sb.append(IDF);
-                    sb.append(TFIDF);
-                    fw.write(sb.toString());
-                    fw.close();
-                } catch (Exception ex) {
-                    ex.printStackTrace();
-                }
+        if (rowCount < 0) {
+            stat("Error : Belum ada Dokumen yang dimasukkan...");
+            return;
+        }
+        if (MainClass.stop_word.size() < 1) {
+            stat("Error : No stopword data");
+            return;
+        }
+        if (MainClass.lemma_dict.size() < 1) {
+            stat("Error : no Lemma data");
+            return;
+        }
+        JFileChooser fc = null;
+        if (cbToFile.isSelected()) {
+            fc = new JFileChooser(new File("/home/me/Documents"));
+            fc.showSaveDialog(null);
+            if (fc.getSelectedFile() == null) {
+                stat("Cancel");
+                return;
             }
         }
+        Dokumens docs = new Dokumens();
+        for (int i = 0; i < dm.getRowCount(); i++) {
+            try {
+                docs.addDoc(new Dokumen((String) dm.getValueAt(i, 0), new FileReader((String) dm.getValueAt(i, 1))));
+            } catch (FileNotFoundException ex) {
+                stat("Error : Failed to load file....");
+            }
+        }
+        ExecutorService exe = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors());
+        exe.execute(new Runnable() {
+            @Override
+            public void run() {
+                if (cbDocInfo.isSelected()) {
+                    stat("Formatting Doc");
+                    DocFOrmatted = docs.getAllDocFormatted() + "\n";
+                } else {
+                    DocFOrmatted = "";
+                }
+                if (cbTF.isSelected()) {
+                    stat("Look TF");
+                    TF = docs.get_TF_formatted() + "\n";
+                } else {
+                    TF = "";
+                }
+                if (cbLTF.isSelected()) {
+                    stat("Look LTF");
+                    LTF = docs.get_LTF_formatted() + "\n";
+                } else {
+                    LTF = "";
+                }
+            }
+        });
+        exe.execute(new Runnable() {
+            @Override
+            public void run() {
+                if (cbDF.isSelected()) {
+                    stat("Look DF");
+                    DF = docs.get_DF() + "\n";
+                } else {
+                    DF = "";
+                }
+                if (cbIDF.isSelected()) {
+                    stat("Look IDF");
+                    IDF = docs.get_IDF() + "\n";
+                } else {
+                    IDF = "";
+                }
+                if (cbTFIDF.isSelected()) {
+                    stat("Look TFIDF");
+                    TFIDF = docs.get_TFIDF_formatted() + "\n";
+                } else {
+                    TFIDF = "";
+                }
+            }
+        });
+        exe.shutdown();
+        try {
+            exe.awaitTermination(Long.MAX_VALUE / 2, TimeUnit.NANOSECONDS);
+        } catch (InterruptedException ex) {
+            Logger.getLogger(Frame.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        if (!cbToFile.isSelected()) {
+            stat("Set DOC");
+            txtOutput.setText(DocFOrmatted);
+            stat("set TF");
+            txtOutput.append(TF);
+            stat("Set LTF");
+            txtOutput.append(LTF);
+            stat("Set DF");
+            txtOutput.append(DF);
+            stat("Set IDF");
+            txtOutput.append(IDF);
+            stat("Set TFIDF");
+            txtOutput.append(TFIDF);
+            tbdPanel.setSelectedIndex(1);
+        } else if (fc.getSelectedFile() != null) {
+            try {
+                stat("Processing File");
+                String file_name = fc.getSelectedFile().getName();
+                File file;
+                if (!file_name.contains(".txt")) {
+                    file = new File(fc.getSelectedFile().getAbsolutePath() + ".txt");
+                } else {
+                    file = new File(fc.getSelectedFile().getAbsolutePath());
+                }
+                FileWriter fw = new FileWriter(file);
+                StringBuilder sb = new StringBuilder();
+                sb.append(DocFOrmatted);
+                sb.append(TF);
+                sb.append(LTF);
+                sb.append(DF);
+                sb.append(IDF);
+                sb.append(TFIDF);
+                fw.write(sb.toString());
+                fw.close();
+                stat("File Complete");
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
+        }
+        stat("Pre-Processing Complete");
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void btnStopWordAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnStopWordAddActionPerformed
+        // TODO add your handling code here:
+        JFileChooser fc = new JFileChooser(FileSystemView.getFileSystemView().getHomeDirectory());
+        fc.setMultiSelectionEnabled(true);
+        fc.showOpenDialog(null);
+        File[] files = fc.getSelectedFiles();
+        File fd = fc.getSelectedFile();
+        if (files.length > 0) {
+            stat("File loaded");
+            DefaultTableModel model = (DefaultTableModel) tblStopWord.getModel();
+            for (File f : files) {
+                try {
+                    addStopWord(f.getAbsolutePath());
+                } catch (FileNotFoundException ex) {
+                    stat("Can't load File" + f.getName());
+                    return;
+                }
+            }
+        } else if (fd != null) {
+            try {
+                stat("File loaded");
+                addStopWord(fd.getAbsolutePath());
+            } catch (FileNotFoundException ex) {
+                stat("Cant load file");
+            }
+        } else {
+            stat("Error : Failed to load file");
+        }
+    }//GEN-LAST:event_btnStopWordAddActionPerformed
+
+    private void btnStopWordRemoveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnStopWordRemoveActionPerformed
+        try {
+            // TODO add your handling code here:
+            removeStopWord();
+        } catch (FileNotFoundException ex) {
+            stat("Cant load StopWord");
+        }
+    }//GEN-LAST:event_btnStopWordRemoveActionPerformed
+
+    private void btnStopWordResetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnStopWordResetActionPerformed
+        // TODO add your handling code here:
+        DefaultTableModel model = (DefaultTableModel) tblStopWord.getModel();
+        int rowCount = model.getRowCount();
+        for (int i = rowCount - 1; i >= 0; i--) {
+            model.removeRow(i);
+        }
+        MainClass.resetStop_word();
+
+    }//GEN-LAST:event_btnStopWordResetActionPerformed
+
+    private void btnLemmaAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLemmaAddActionPerformed
+        // TODO add your handling code here:
+        // TODO add your handling code here:
+        JFileChooser fc = new JFileChooser(FileSystemView.getFileSystemView().getHomeDirectory());
+        fc.setMultiSelectionEnabled(true);
+        fc.showOpenDialog(null);
+        File[] files = fc.getSelectedFiles();
+        File fd = fc.getSelectedFile();
+        if (files.length > 0) {
+            stat("File loaded");
+            DefaultTableModel model = (DefaultTableModel) tblLemma.getModel();
+            for (File f : files) {
+                try {
+                    addLemma(f.getAbsolutePath());
+                } catch (FileNotFoundException ex) {
+                    stat("Cant load file");
+                }
+            }
+        } else if (fd != null) {
+            try {
+                stat("File loaded");
+                addLemma(fd.getAbsolutePath());
+            } catch (FileNotFoundException ex) {
+                stat("Cant load file");
+            }
+        } else {
+            stat("Error : Failed to load file");
+        }
+    }//GEN-LAST:event_btnLemmaAddActionPerformed
+
+    private void btnLemmaRemoveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLemmaRemoveActionPerformed
+        // TODO add your handling code here:
+        try {
+            // TODO add your handling code here:
+            removeLemma();
+        } catch (FileNotFoundException ex) {
+            stat("Cant load StopWord");
+        }
+    }//GEN-LAST:event_btnLemmaRemoveActionPerformed
+
+    private void btnLemmaResetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLemmaResetActionPerformed
+        // TODO add your handling code here:
+        DefaultTableModel model = (DefaultTableModel) tblLemma.getModel();
+        int rowCount = model.getRowCount();
+        for (int i = rowCount - 1; i >= 0; i--) {
+            model.removeRow(i);
+        }
+        MainClass.resetLemma();
+    }//GEN-LAST:event_btnLemmaResetActionPerformed
+    private void stat(String s) {
+        lblStatus.setText(s);
+        System.err.println(s);
+    }
+    private void addStopWord(String path) throws FileNotFoundException {
+        File file = new File(path);
+        DefaultTableModel model = (DefaultTableModel) tblStopWord.getModel();
+        model.addRow(new String[]{file.getAbsolutePath()});
+        MainClass.addStop_word(TextMining.load_arr(file.getAbsolutePath()));
+    }
+    private void removeStopWord() throws FileNotFoundException {
+        DefaultTableModel model = (DefaultTableModel) tblStopWord.getModel();
+        int[] rows = tblStopWord.getSelectedRows();
+        for (int i = 0; i < rows.length; i++) {
+            model.removeRow(rows[i] - i);
+        }
+        for (int i = 0; i < model.getRowCount(); i++) {
+            MainClass.addStop_word(TextMining.load_arr((String) model.getValueAt(i, 0)));
+        }
+    }
+    private void addLemma(String path) throws FileNotFoundException {
+        File file = new File(path);
+        DefaultTableModel model = (DefaultTableModel) tblLemma.getModel();
+        model.addRow(new String[]{file.getAbsolutePath()});
+        MainClass.addLemma(TextMining.load_dictionary(file.getAbsolutePath(), "\t"));
+    }
+    private void removeLemma() throws FileNotFoundException {
+        DefaultTableModel model = (DefaultTableModel) tblLemma.getModel();
+        int[] rows = tblLemma.getSelectedRows();
+        for (int i = 0; i < rows.length; i++) {
+            model.removeRow(rows[i] - i);
+        }
+        for (int i = 0; i < model.getRowCount(); i++) {
+            MainClass.addLemma(TextMining.load_dictionary((String) model.getValueAt(i, 0), "\t"));
+        }
+    }
     /**
      * @param args the command line arguments
      */
@@ -521,7 +860,13 @@ public class Frame extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnKurang;
+    private javax.swing.JButton btnLemmaAdd;
+    private javax.swing.JButton btnLemmaRemove;
+    private javax.swing.JButton btnLemmaReset;
     private javax.swing.JButton btnReset;
+    private javax.swing.JButton btnStopWordAdd;
+    private javax.swing.JButton btnStopWordRemove;
+    private javax.swing.JButton btnStopWordReset;
     private javax.swing.JButton btnTambah;
     private javax.swing.JCheckBox cbDF;
     private javax.swing.JCheckBox cbDocInfo;
@@ -533,17 +878,27 @@ public class Frame extends javax.swing.JFrame {
     private javax.swing.JButton jButton1;
     private javax.swing.JDialog jDialog1;
     private javax.swing.JFileChooser jFileChooser1;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
+    private javax.swing.JPanel jPanel7;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JToolBar jToolBar1;
+    private javax.swing.JToolBar jToolBar2;
+    private javax.swing.JToolBar jToolBar3;
+    private javax.swing.JLabel lblStatus;
     private javax.swing.JTabbedPane tbdPanel;
     private javax.swing.JTable tblFile;
+    private javax.swing.JTable tblLemma;
+    private javax.swing.JTable tblStopWord;
     private javax.swing.JTextArea txtOutput;
     // End of variables declaration//GEN-END:variables
 }

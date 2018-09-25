@@ -18,9 +18,22 @@ import java.util.TreeMap;
 public class MainClass {
     public static List<String[]> stop_word = new LinkedList<>();
     public static List<HashMap<String, String>> lemma_dict = new LinkedList<>();
+    public static void addStop_word(String[] s){
+        stop_word.add(s);
+    }
+    public static void resetStop_word(){
+        stop_word.clear();
+    }
+    public static void addLemma(HashMap<String, String> s){
+        lemma_dict.add(s);
+    }
+    public static void resetLemma(){
+        lemma_dict.clear();
+    }
+    
     public static void main(String[] args) throws FileNotFoundException {
         stop_word.add(load_arr("stopword-en.txt"));
-        lemma_dict.add(load_dictionary("lemmatization-en.txt", "\t"));
+        lemma_dict.add(load_dictionary("lemma/lemma-en2.txt", "\t"));
         Dokumen doc1 = new Dokumen("D1", "Dark Souls is an action role-playing game developed by FromSoftware and published by Namco Bandai Games. A spiritual successor to FromSoftware's Demon's Souls, the game is the second installment in the Souls series. ");
         Dokumen doc2 = new Dokumen("D2", "Dark Souls received critical acclaim upon its release and is considered to be one of the best video games ever released, with critics praising the depth of its combat, intricate level design, and world lore.");
         Dokumen doc3 = new Dokumen("D3", "Dark Souls is a third-person action role-playing game. The core mechanic of the game is exploration. Players are encouraged by the game to proceed with caution, learn from past mistakes, or find alternate areas to explore.");

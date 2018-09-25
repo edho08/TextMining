@@ -59,10 +59,10 @@ public class Dokumen implements Comparable {
         return terms;
     }
     public String[] getTerms() {
-        return TextMining.reduce(terms);
+        return TextMining.reduce(getLematizedToken());
     }
     public HashMap<String, Integer> getMapping() {
-        return TextMining.word_count(terms);
+        return TextMining.word_count(getTerms());
     }
     public HashMap<String, Double> getLTF() {
         HashMap<String, Integer> map = getMapping();

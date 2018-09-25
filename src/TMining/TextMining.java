@@ -68,10 +68,10 @@ public class TextMining {
     public static String[] lemmatization(String[] input, HashMap<String, String> dictionary) {
         List<String> list = new LinkedList<>();
         for (String s : input) {
-            if (dictionary.containsKey(s)) {
+            if (dictionary.containsKey(s.toLowerCase())) {
                 list.add(dictionary.get(s));
             } else {
-                list.add(s);
+                list.add(s.toLowerCase());
             }
         }
         return list.toArray(new String[0]);
@@ -126,7 +126,7 @@ public class TextMining {
         HashMap<String, String> output = new HashMap<>();
         while (input.hasNextLine()) {
             String[] scan = input.nextLine().split(delimiter);
-            output.put(scan[1], scan[0]);
+            output.put(scan[0].toLowerCase(), scan[1].toLowerCase());
         }
         return output;
     }
@@ -188,7 +188,7 @@ public class TextMining {
         return map;
     }
     public static void main(String[] args) throws FileNotFoundException, IOException {
-        String[] input = load_arr("input.txt");
+       /* String[] input = load_arr("input.txt");
         String[] cleaning = load_arr("nonchar.txt");
         for (int i = 0; i < input.length; i++) {
             input[i] = clean(input[i]);
@@ -215,15 +215,19 @@ public class TextMining {
             System.err.println("File not Found Exit");
             System.exit(1);
         }
-        /*
+        */
         
-         */
-//        String[] load = load_arr("lemma-id.txt");
-//        FileWriter writer = new FileWriter("lemma-id9.txt");
-//        for (int i = 0; i < load.length; i++) {
-//            String a = load[i].trim()+ "nya";
-//            writer.write(a + "\t" + load[i] + "\n");
-//            System.err.println(load[i]);
-//        }
+         
+        String[] load = load_arr("lemma/lemma-en1.txt");
+
+        FileWriter writer = new FileWriter("lemma-en5.txt");
+        for (int i = 0; i < load.length; i++) {
+            String[] s = load[i].trim().split("\t");
+            String value = s[0].trim();
+            String key = s[1].trim();
+                writer.append(key+"\t"+value+"\n");
+            
+        }
+        writer.close();
     }
 }
