@@ -1,0 +1,14 @@
+Nowadays, the volume of databases that
+financial companies manage is so great that it has become necessary to
+address this problem, and the solution to this can be found in Big Data techniques applied to massive
+financial
+datasets for segmenting risk groups. In this paper, the presence of large datasets is approached through the
+development of some Monte Carlo experiments using known techniques and algorithms. In addition, a linear
+mixed model (LMM) has been implemented as a new incremental contribution to calculate the credit risk of
+financial companies. These computational experiments are developed with several combinations of dataset sizes
+and forms to cover a wide variety of cases. Results reveal that large datasets need Big Data techniques and
+algorithms that yield faster and unbiased estimators. Big Data can help to extract the value of data and thus
+better decisions can be made without the runtime component. Through these techniques, there would be less risk
+for
+financial companies when predicting which clients will be successful in their payments. Consequently, more
+people could have access to credit loans.
