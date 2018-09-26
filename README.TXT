@@ -30,7 +30,7 @@ Texty is a buggy bag of word raw text pre-processing. It is buggy as hell.
 - Get some sleep 
 
 (?) COPYLEFT ALL WRONGS RESERVED!!!
-
+gitHub : https://github.com/edho08/TextMining
 TIM TEXT MINING 2018
 FILKOM
 UB
