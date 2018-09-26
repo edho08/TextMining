@@ -1,18 +1,8 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package TMining;
-import static TMining.MainClass.lemma_dict;
-import static TMining.MainClass.stop_word;
-import static TMining.TextMining.load_arr;
-import static TMining.TextMining.load_dictionary;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
-import java.util.Vector;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
@@ -22,7 +12,7 @@ import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileSystemView;
 import javax.swing.table.DefaultTableModel;
 /**
- *
+ * This code is Uncommented. Please make use of it without comment.
  * @author Edho
  */
 public class Frame extends javax.swing.JFrame {
@@ -108,7 +98,6 @@ public class Frame extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Texty");
-        setPreferredSize(new java.awt.Dimension(900, 700));
         setResizable(false);
 
         tbdPanel.setFocusable(false);
@@ -270,7 +259,7 @@ public class Frame extends javax.swing.JFrame {
 
         txtOutput.setColumns(20);
         txtOutput.setRows(5);
-        txtOutput.setText("<---------IMPORTANT------------>\n\"This program ain't pretty, but you are \"v\" \" ~ INSANEPROGRAMMER\n\n\n1. The input must be .txt file or raw text file, this might change\n2. You can add more lemma database in SL manager with configuration <\"word\" -> \"root\"> e.g. darkest\tdark\n3. You can add more stopwords database in SL manager\n4. Full of bugs and riddled with riddle ;\\\n5. Use \"Save to File\" often. its faster. I dont know why appending String to TextBox is such pain in the a**\n\n\n<---------HOW TO------------>\n1. Open SL manager. Manage your stopwords and lemma databases. You can add, delete, or delete all.\n2. Open File Manager. Manage your text file to be pre-processed.\n3. IMPORTANT!!! Only use raw... this might change in the future if i have time.\n4. Choose your formatting.. its on right-down side.\n5. Choose to \"Save to file\" or just print to Output (Save to file recommended).\n6. Pre-process\n\n\n<---------ABOUT------------>\nTexty is a buggy bag of word raw text pre-processing. It is buggy as hell.\n(?) COPYLEFT ALL WRONGS RESERVED!!!\n\nTIM TEXT MINING 2018\nFILKOM\nUB\n");
+        txtOutput.setText("<---------IMPORTANT------------>\n\"This program ain't pretty, but you are \"v\" \" ~ INSANEPROGRAMMER\n\n\n1. The input must be .txt file or raw text file, this might change\n2. You can add more lemma database in SL manager with configuration <\"word\" -> \"root\"> e.g. darkest\tdark\n3. You can add more stopwords database in SL manager\n4. Full of bugs and riddled with riddle ;\\\n5. Use \"Save to File\" often. its faster. We dont know why appending String to TextBox is such pain in the a**\n\n\n<---------HOW TO------------>\n1. Open SL manager. Manage your stopwords and lemma databases. You can add, delete, or delete all.\n2. Open File Manager. Manage your text file to be pre-processed.\n3. IMPORTANT!!! Only use raw... this might change in the future if we have time.\n4. Choose your formatting.. its on right-down side.\n5. Choose to \"Save to file\" or just print to Output (Save to file recommended).\n6. Pre-process\n\n\n<---------ABOUT------------>\nTexty is a buggy bag of word raw text pre-processing. It is buggy as hell.\n\n<---------TO DO------------>\n- Comment the Code (All code is uncommented) (Typical)\n- Add stemmer (download from internet)\n- More friendly UI\n- More Lemma/Stopword\n- Lemma builder (for faster and ultimate lemma)\n- Get some sleep \n\n(?) COPYLEFT ALL WRONGS RESERVED!!!\n\nTIM TEXT MINING 2018\nFILKOM\nUB\n");
         jScrollPane2.setViewportView(txtOutput);
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);

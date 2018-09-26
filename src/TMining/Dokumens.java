@@ -1,7 +1,6 @@
 package TMining;
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -9,20 +8,12 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.SortedSet;
 import java.util.TreeMap;
 public class Dokumens {
     private List<Dokumen> docs = new LinkedList<>();
     public Dokumens(Dokumen[] docs) {
-        for (Dokumen m : docs) {
-            this.docs.add(m);
-        }
-        Collections.sort(this.docs, new Comparator<Dokumen>() {
-            @Override
-            public int compare(Dokumen t, Dokumen t1) {
-                return t.getName().compareTo(t1.getName());
-            }
-        });
+        this.docs.addAll(Arrays.asList(docs));
+        Collections.sort(this.docs, (Dokumen t, Dokumen t1) -> t.getName().compareTo(t1.getName()));
     }
     public Dokumens(){}
     public int getDocCount(){
@@ -40,12 +31,7 @@ public class Dokumens {
     }
     public void addDoc(Dokumen d){
         docs.add(d);
-        Collections.sort(this.docs, new Comparator<Dokumen>() {
-            @Override
-            public int compare(Dokumen t, Dokumen t1) {
-                return t.getName().compareTo(t1.getName());
-            }
-        });
+        Collections.sort(this.docs, (Dokumen t, Dokumen t1) -> t.getName().compareTo(t1.getName()));
     }
     public HashMap<String, Double> getIDF() {
         HashMap<String, Double> IDF = getDF();
@@ -153,16 +139,14 @@ public class Dokumens {
         return getWeightFormatted(getTF(), "TF");
     }
     public String get_IDF() {
-        System.out.println("IDF");
         HashMap<String, Double> map = getIDF();
         MapPrinter<String, Double> printer = new MapPrinter<>(map);
-        return printer.toString();
+        return "IDF\n"+printer.toString();
     }
     public String get_DF() {
-        System.out.println("DF");
         HashMap<String, Double> map = getDF();
         MapPrinter<String, Double> printer = new MapPrinter<>(map);
-        return printer.toString();
+        return "DF\n"+printer.toString();
     }
     private String getWeightFormatted(HashMap<Dokumen, HashMap<String, Double>> map, String p) {
        StringBuilder ret = new StringBuilder();

@@ -30,7 +30,12 @@ public class MainClass {
     public static void resetLemma(){
         lemma_dict.clear();
     }
-    
+    /**
+     * 
+     * Main method untuk tugas kemarin.
+     * @throws FileNotFoundException 
+     */
+    /*
     public static void main(String[] args) throws FileNotFoundException {
         stop_word.add(load_arr("stopword-en.txt"));
         lemma_dict.add(load_dictionary("lemma/lemma-en2.txt", "\t"));
@@ -65,5 +70,5 @@ public class MainClass {
 //        doc1.print_terms();
 //        doc1.print_terms_counts();
 //        doc1.print_LTF();
-    }
+    }*/
 }

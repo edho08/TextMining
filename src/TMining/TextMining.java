@@ -3,9 +3,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.AbstractMap;
 import java.util.Arrays;
-import java.util.Dictionary;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -13,6 +11,12 @@ import java.util.Map;
 import java.util.Scanner;
 /**
  * Text Mining merupakan library yang dapat membantu proses Text Mining
+ * (?) COPYLEFT ALL WRONGS RESERVED!!!
+ */
+
+/**
+ * This Whole code is Uncommented. Please refer to nothing.
+ * @author Edho
  */
 public class TextMining {
     public static String[] Tokenize(String[] input) {
@@ -23,12 +27,7 @@ public class TextMining {
         }
         return list.toArray(new String[0]);
     }
-    /**
-     *
-     * @param input : Merupakan String yang akan diproses
-     * @param to_remove : Merupakan daftar String yang akan dibuang dari input
-     * @return String yang
-     */
+
     public static String clean(String input) {
         return input.replaceAll("[^A-Za-z]", " ").replaceAll("[0-9]", "");
     }
@@ -38,6 +37,12 @@ public class TextMining {
         }
         return input;
     }
+     /**
+     *
+     * @param input[] : Merupakan array String yang akan diproses
+     * @param to_remove : Merupakan daftar String yang akan dibuang dari input
+     * @return String yang
+     */
     public static String[] remove_string(String[] input, String[] to_remove) {
         HashMap remove_map = new HashMap();
         for (String s : to_remove) {
@@ -58,7 +63,7 @@ public class TextMining {
         }
         return remove_string(input, remove_map);
     }
-        public static String remove_string(String input, HashMap<String, Integer> remove_map) {
+    public static String remove_string(String input, HashMap<String, Integer> remove_map) {
         if (remove_map.containsKey(input)) {
             return "";
         } else {
@@ -153,12 +158,11 @@ public class TextMining {
             if (s.trim().equalsIgnoreCase("")) {
                 continue;
             }
-                if (count.containsKey(s)) {
-                    count.replace(s, count.get(s) + 1);
-                } else {
-                    count.put(s, 1);
-                }
-            
+            if (count.containsKey(s)) {
+                count.replace(s, count.get(s) + 1);
+            } else {
+                count.put(s, 1);
+            }
         }
         return count;
     }
@@ -186,48 +190,5 @@ public class TextMining {
             map.put(s, 1);
         }
         return map;
-    }
-    public static void main(String[] args) throws FileNotFoundException, IOException {
-       /* String[] input = load_arr("input.txt");
-        String[] cleaning = load_arr("nonchar.txt");
-        for (int i = 0; i < input.length; i++) {
-            input[i] = clean(input[i]);
-        }
-        input = Tokenize(input);
-        System.out.println("panjang input = " + input.length);
-        HashMap map;
-        String[] stopword;
-        try {
-            stopword = load_arr("stopword-en.txt");
-            String[] output = remove_string(input, stopword);
-            map = load_dictionary("lemmatization-en.txt", "\t");
-            output = lemmatization(output, map);
-//            HashMap<String, Integer> co = word_count(output);
-//            for (Map.Entry<String, Integer> entry : co.entrySet()) {
-//                System.out.println(entry.getKey() + ", " + entry.getValue());
-//            }
-            output = reduce(output);
-            System.out.println("panjang output = " + output.length);
-            for (String a : output) {
-                System.out.println(a);
-            }
-        } catch (FileNotFoundException e) {
-            System.err.println("File not Found Exit");
-            System.exit(1);
-        }
-        */
-        
-         
-        String[] load = load_arr("lemma/lemma-en1.txt");
-
-        FileWriter writer = new FileWriter("lemma-en5.txt");
-        for (int i = 0; i < load.length; i++) {
-            String[] s = load[i].trim().split("\t");
-            String value = s[0].trim();
-            String key = s[1].trim();
-                writer.append(key+"\t"+value+"\n");
-            
-        }
-        writer.close();
     }
 }

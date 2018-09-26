@@ -1,14 +1,10 @@
 package TMining;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
-import java.util.AbstractMap;
-import java.util.Dictionary;
 import java.util.HashMap;
 import java.util.Iterator;
-import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
-import sun.reflect.generics.tree.Tree;
 public class Dokumen implements Comparable {
     private String name;
     private String[] raw_lines;
@@ -66,7 +62,7 @@ public class Dokumen implements Comparable {
         return TextMining.reduce(token);
     }
     public HashMap<String, Integer> getMapping() {
-        return TextMining.word_count(getTerms());
+        return TextMining.word_count(terms);
     }
     public HashMap<String, Double> getLTF() {
         HashMap<String, Integer> map = getMapping();
@@ -142,8 +138,8 @@ public class Dokumen implements Comparable {
     public String getFormatted() {
         StringBuilder ret = new StringBuilder();
         ret.append(String.format("Dokumen : %s \n", getName()));
-        ret.append(String.format("Lines : "));
-        ret.append(get_Raw_Lines() + "\n");
+       // ret.append(String.format("Lines : "));
+       // ret.append(get_Raw_Lines() + "\n");
         System.out.println("Raw line");
         ret.append(String.format("%-15s | %-15s | %-15s | %-15s\n", "Token", "Lemmatized", "Filtered", "Terms"));
 //        HashMap<String, Integer> Lemmatized = TextMining.getDumpMap(getLematizedToken());
